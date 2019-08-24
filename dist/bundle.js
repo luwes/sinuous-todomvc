@@ -580,32 +580,23 @@
     };
   }
 
-  const LOCAL_STORAGE_KEY = 'todos-sinuous';
-  function LocalStoragePersistence(model) {
-    // load stored todos on init
-    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-
-    if (stored) {
-      model.todos(JSON.parse(stored).todos.map(t => ToDo(t.title, t.completed, t.id)));
-    } // store JSONized todos whenever they change
-
-
-    f(() => {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(model));
-    });
-  }
-
-  function ToDosRouter(ctrl) {
-    const locationHandler = () => ctrl.showMode(location.hash.slice(2) || 'all');
-
-    window.addEventListener('hashchange', locationHandler);
-    locationHandler();
-  }
-
   const model = ToDosModel([]);
   const ctrl = ToDosCtrl(model);
-  LocalStoragePersistence(model);
-  ToDosRouter(ctrl);
+  const stored = localStorage.getItem('todos-sinuous');
+
+  if (stored) {
+    model.todos(JSON.parse(stored).todos.map(t => ToDo(t.title, t.completed, t.id)));
+  }
+
+  f(() => {
+    // store JSONized todos whenever they change
+    localStorage.setItem('todos-sinuous', JSON.stringify(model));
+  });
+
+  const locationHandler = () => ctrl.showMode(location.hash.slice(2) || 'all');
+
+  window.addEventListener('hashchange', locationHandler);
+  locationHandler();
   document.querySelector('.todoapp').append(TodoApp(ctrl));
 
 }());
