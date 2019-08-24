@@ -1,5 +1,6 @@
 import { h } from 'sinuous';
 import { S } from 'sinuous/observable';
+import map from 'sinuous/map';
 import { ToDosModel, ToDo } from './model.js';
 import { ToDosCtrl } from './controller.js';
 import { cx } from './utils.js';
@@ -28,7 +29,7 @@ const TodoApp = (ctrl) => {
       <input id="toggle-all" class="toggle-all" type="checkbox" checked="${() => !ctrl.remainingCount()}" oninput="${ctrl.toggleAll}" />
       <label htmlFor="toggle-all">Mark all as complete</label>
       <ul class="todo-list">
-        ${() => ctrl.filterList(ctrl.todos()).map(({ id, title, completed }) => html`
+        ${map(() => ctrl.filterList(ctrl.todos()), ({ id, title, completed }) => html`
           <li class=${() => cx({ completed: completed(), editing: ctrl.editing() === id })}>
             <div class="view">
               <input class="toggle" type="checkbox" checked="${completed}" oninput="${e => ctrl.toggle(e, id)}" />
