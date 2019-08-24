@@ -8,7 +8,7 @@ export const TodoApp = (ctrl) => {
       <h1>todos</h1>
       <input class="new-todo" placeholder="What needs to be done?" autofocus onkeyup=${ctrl.addTodo} />
     </header>
-    <section class="main">
+    <section class="main" hidden=${() => ctrl.todos().length === 0}>
       <input id="toggle-all" class="toggle-all" type="checkbox" checked="${() => !ctrl.remainingCount()}" oninput="${ctrl.toggleAll}" />
       <label htmlFor="toggle-all">Mark all as complete</label>
       <ul class="todo-list">
@@ -30,7 +30,7 @@ export const TodoApp = (ctrl) => {
         `)}
       </ul>
     </section>
-    <footer class="footer">
+    <footer class="footer" hidden=${() => ctrl.todos().length === 0}>
       <span class="todo-count"><strong>${ctrl.remainingCount}</strong>
         ${() => (ctrl.remainingCount() === 1 ? ' item' : ' items')} left
       </span>
