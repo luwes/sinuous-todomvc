@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "rollup -w -c",
     "build": "rollup -c --environment production",
-    "start": "http-server -c-1 -p 8000 dist & yarn dev"
+    "start": "http-server -c-1 -p 8000 dist & yarn dev",
+    "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "main": "index.js",
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
