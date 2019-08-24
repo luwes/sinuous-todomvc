@@ -413,7 +413,8 @@
       autofocus: true,
       onkeyup: ctrl.addTodo
     })), m("section", {
-      "class": "main"
+      "class": "main",
+      hidden: () => ctrl.todos().length === 0
     }, m("input", {
       id: "toggle-all",
       "class": "toggle-all",
@@ -457,7 +458,8 @@
         return input;
       }
     })))), m("footer", {
-      "class": "footer"
+      "class": "footer",
+      hidden: () => ctrl.todos().length === 0
     }, m("span", {
       "class": "todo-count"
     }, m("strong", null, ctrl.remainingCount), () => ctrl.remainingCount() === 1 ? ' item' : ' items', " left"), m("ul", {
