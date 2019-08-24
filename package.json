@@ -1,0 +1,33 @@
+{
+  "name": "sinuous-todomvc",
+  "version": "1.0.0",
+  "description": "Sinuous implementation of TodoMVC",
+  "scripts": {
+    "dev": "rollup -w -c",
+    "build": "rollup -c --environment production",
+    "start": "http-server -c-1 -p 8000 dist & yarn dev"
+  },
+  "main": "index.js",
+  "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
+  "license": "MIT",
+  "dependencies": {
+    "sinuous": "^0.13.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "babel-eslint": "^10.0.2",
+    "eslint": "^6.1.0",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsdoc": "^15.8.0",
+    "http-server": "^0.11.1",
+    "prettier": "^1.18.2",
+    "rollup": "1.19.4",
+    "rollup-plugin-babel": "4.3.3",
+    "rollup-plugin-node-resolve": "5.2.0",
+    "rollup-plugin-size": "^0.1.0",
+    "rollup-plugin-terser": "5.1.1",
+    "todomvc-app-css": "^2.2.0",
+    "todomvc-common": "^1.0.5"
+  }
+}
