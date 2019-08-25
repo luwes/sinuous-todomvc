@@ -2,7 +2,7 @@ import { h } from 'sinuous';
 import map from 'sinuous/map';
 import { addTodo, clearCompleted, completed, displayed, doneEditing, editing,
   filter, remaining, remove, save, todos, toggle, toggleAll } from './controller.js';
-import { cx } from './utils.js';
+import { cx, focus } from './utils.js';
 
 const TodoApp = () => html`
   <header class=header>
@@ -37,19 +37,14 @@ const TodoApp = () => html`
             <label ondblclick=${() => editing(id)}>${title}</label>
             <button class=destroy onclick=${() => remove(id)}></button>
           </div>
-          ${() => {
-            if (editing() === id) {
-              const input = html`
-                <input
-                  class=edit
-                  value=${title}
-                  onfocusout=${e => save(e, id)}
-                  onkeyup=${e => doneEditing(e, id)}
-                />`;
-              setTimeout(() => input.focus());
-              return input;
-            }
-          }}
+          ${() => editing() === id && focus(html`
+            <input
+              class=edit
+              value=${title}
+              onfocusout=${e => save(e, id)}
+              onkeyup=${e => doneEditing(e, id)}
+            />`)
+          }
         </li>
       `)}
     </ul>

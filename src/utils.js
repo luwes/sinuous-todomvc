@@ -9,3 +9,8 @@ export function cx(obj) {
   }
   return cls;
 }
+
+export function focus(input) {
+  setTimeout(() => input.focus());
+  return input;
+}
