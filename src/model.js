@@ -1,4 +1,5 @@
 import { observable } from 'sinuous';
+import { S } from 'sinuous/observable';
 
 export const ToDo = (title, completed = false, id = Date.now()) => ({
   id,
@@ -9,6 +10,14 @@ export const ToDo = (title, completed = false, id = Date.now()) => ({
 export const ToDosModel = todos => ({
   todos: jsonable(observable(todos))
 });
+
+export const model = ToDosModel([]);
+
+const stored = localStorage.getItem('todos-sinuous');
+if (stored) {
+  model.todos(JSON.parse(stored).todos.map(t => ToDo(t.title, t.completed, t.id)));
+}
+S(() => localStorage.setItem('todos-sinuous', JSON.stringify(model)));
 
 // Make any signal jsonable by adding a toJSON method
 // that extracts its value during JSONization.

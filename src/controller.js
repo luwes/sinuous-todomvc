@@ -1,85 +1,58 @@
 import { observable } from 'sinuous';
-import { S } from 'sinuous/observable';
-import { ToDo } from './model.js';
+import { model, ToDo } from './model.js';
 
 const ESCAPE_KEY = 27;
 const ENTER_KEY = 13;
 
-export function ToDosCtrl({ todos }) {
-  const editing = observable();
-  const showMode = observable('all');
-  const completedCount = S(() => {
-    return todos().filter(todo => todo.completed()).length;
-  });
-  const remainingCount = S(() => {
-    return todos().length - completedCount();
-  });
+export const { todos } = model;
+export const editing = observable();
+export const filter = observable('all');
+export const completed = () => todos().filter(todo => todo.completed());
+export const remaining = () => todos().filter(todo => !todo.completed());
+export const displayed = () =>
+  filter() === 'all' ? todos() :
+  filter() === 'completed' ? completed() : remaining();
+export const clearCompleted = () =>
+  todos(todos().filter(todo => !todo.completed()));
 
-  function addTodo({ target, keyCode }) {
-    let title = target.value.trim();
-    if (keyCode === ENTER_KEY && title) {
-      todos(todos().concat(ToDo(title)));
-      target.value = '';
-    }
+export function toggleAll(e) {
+  const completed = e.target.checked;
+  todos()
+    .filter(todo => todo.completed() !== completed)
+    .forEach(todo => todo.completed(completed));
+}
+
+export function addTodo({ target, keyCode }) {
+  let title = target.value.trim();
+  if (keyCode === ENTER_KEY && title) {
+    todos(todos().concat(ToDo(title)));
+    target.value = '';
   }
+}
 
-  function filterList(todos) {
-    if (showMode() === 'active') return todos.filter(todo => !todo.completed());
-    else if (showMode() === 'completed') return todos.filter(todo => todo.completed());
-    else return todos;
+export function remove(id) {
+  return todos(todos().filter(todo => todo.id !== id));
+}
+
+export function doneEditing(e, id) {
+  if (e.keyCode === ENTER_KEY) save(e, id);
+  else if (e.keyCode === ESCAPE_KEY) editing(null);
+}
+
+export function save(e, id) {
+  let title = e.target.value.trim();
+  if (editing() === id && title) {
+    editTodo({ id, title });
+    editing(null);
   }
+}
 
-  function remove(id) {
-    return todos(todos().filter((todo) => todo.id !== id));
-  }
+export function editTodo({ id, title, completed }) {
+  const todo = todos().filter(todo => todo.id === id)[0];
+  if (title) todo.title(title);
+  if (completed != null) todo.completed(completed);
+}
 
-  function clearCompleted() {
-    return todos(todos().filter((todo) => !todo.completed()));
-  }
-
-  function doneEditing(e, id) {
-    if (e.keyCode === ENTER_KEY) save(e, id);
-    else if (e.keyCode === ESCAPE_KEY) editing(null);
-  }
-
-  function save({ target }, id) {
-    let title = target.value.trim();
-    if (editing() === id && title) {
-      editTodo({ id, title });
-      editing(null);
-    }
-  }
-
-  function editTodo({ id, title, completed }) {
-    const todo = todos().filter((todo) => todo.id === id)[0];
-    if (title) todo.title(title);
-    if (completed != null) todo.completed(completed);
-  }
-
-  function toggle(e, id) {
-    editTodo({ id, completed: e.target.checked });
-  }
-
-  function toggleAll(e) {
-    const completed = e.target.checked;
-    todos()
-      .filter((todo) => todo.completed() !== completed)
-      .forEach((todo) => todo.completed(completed));
-  }
-
-  return {
-    completedCount,
-    editing,
-    remainingCount,
-    showMode,
-    todos,
-    addTodo,
-    filterList,
-    remove,
-    clearCompleted,
-    doneEditing,
-    save,
-    toggle,
-    toggleAll
-  };
+export function toggle(e, id) {
+  editTodo({ id, completed: e.target.checked });
 }
