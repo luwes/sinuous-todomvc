@@ -1,5 +1,5 @@
 import { h } from 'sinuous';
-import map from 'sinuous/map';
+import { mini as map } from 'sinuous/map';
 import { addTodo, clearCompleted, completed, displayed, doneEditing, editing,
   filter, remaining, remove, save, todos, toggle, toggleAll } from './controller.js';
 import { cx, focus } from './utils.js';
@@ -17,6 +17,7 @@ const TodoApp = () => html`
 
   <section class=main hidden=${() => !todos().length}>
     <input
+      id=toggle-all
       class=toggle-all
       type=checkbox
       oninput=${toggleAll}
