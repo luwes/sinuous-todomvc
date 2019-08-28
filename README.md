@@ -3,7 +3,7 @@
 [Sinuous](https://github.com/luwes/sinuous/) implementation of the [TodoMVC](http://todomvc.com/) example application.  
 [luwes.github.io/sinuous-todomvc](https://luwes.github.io/sinuous-todomvc).
 
-The entire app weighs 3.5kb gzip.
+The entire app weighs 2.8kb gzip.
 
 ```js
 import { h } from 'sinuous';
@@ -25,6 +25,7 @@ const TodoApp = () => html`
 
   <section class=main hidden=${() => !todos().length}>
     <input
+      id=toggle-all
       class=toggle-all
       type=checkbox
       oninput=${toggleAll}
