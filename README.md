@@ -3,7 +3,7 @@
 [Sinuous](https://github.com/luwes/sinuous/) implementation of the [TodoMVC](http://todomvc.com/) example application.  
 [luwes.github.io/sinuous-todomvc](https://luwes.github.io/sinuous-todomvc).
 
-The entire app weighs 2.8kb gzip.
+The entire app weighs 2.9kb gzip.
 
 ```js
 import { h } from 'sinuous';

@@ -1,5 +1,5 @@
 import { h } from 'sinuous';
-import { mini as map } from 'sinuous/map';
+import { map } from 'sinuous/map/mini';
 import { addTodo, clearCompleted, completed, displayed, doneEditing, editing,
   filter, remaining, remove, save, todos, toggle, toggleAll } from './controller.js';
 import { cx, focus } from './utils.js';
