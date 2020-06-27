@@ -12,7 +12,7 @@
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
   "license": "MIT",
   "dependencies": {
-    "sinuous": "0.27.0"
+    "sinuous": "0.27.6"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
